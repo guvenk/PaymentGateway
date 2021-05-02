@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Services
+namespace Models
 {
-    public class PaymentGatewayService
+    public enum Product
     {
-        
+        Book,
+        Table,
+        Lamp,
+        Monitor
     }
 }

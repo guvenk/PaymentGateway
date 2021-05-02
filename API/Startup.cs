@@ -1,3 +1,4 @@
+using Business;
 using DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,9 @@ namespace PaymentGateway
             });
 
             services.AddAuth(Configuration);
+
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IBankService, BankService>();
 
             services.AddControllers();
             services.AddSwagger();
