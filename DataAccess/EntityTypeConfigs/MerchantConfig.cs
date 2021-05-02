@@ -20,6 +20,14 @@ namespace DataAccess.EntityTypeConfigs
                 .HasForeignKey(x => x.MerchantId)
                 .HasPrincipalKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            var merchant = new Merchant
+            {
+                Id = 1L,
+                Name = "Amazon",
+            };
+
+            builder.HasData(merchant);
         }
     }
 }
