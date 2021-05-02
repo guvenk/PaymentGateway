@@ -7,7 +7,9 @@ namespace DataAccess
     public class AppDbContext : DbContext
     {
 
-        //public DbSet<Comment> Comments { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+
+        public DbSet<Merchant> Merchants { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
