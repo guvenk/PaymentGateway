@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace DataAccess.EntityTypeConfigs
 {
@@ -11,28 +12,20 @@ namespace DataAccess.EntityTypeConfigs
 
             builder.HasKey(a => a.Id);
 
-            builder.Property(a => a.CardNumber)
-                .IsRequired()
-                .HasMaxLength(22);
-
-            builder.Property(a => a.ExpireMonth)
-                .IsRequired();
-
-            builder.Property(a => a.ExpireYear)
-                .IsRequired();
-
             builder.Property(a => a.Amount)
                 .IsRequired()
-                .HasColumnType("decimal(5,2)");
+                .HasColumnType("decimal(15,3)");
 
             builder.Property(a => a.Currency)
+                .IsRequired()
+                .HasMaxLength(10);
+
+            builder.Property(x => x.IsSuccessful)
                 .IsRequired();
 
-            builder.Property(a => a.Cvv)
-                .IsRequired();
-
-            builder.Property(a => a.CreateDate)
-                .IsRequired();
+            builder.Property(a => a.CreatedDate)
+                .IsRequired()
+                .HasColumnType("datetime2(2)");
         }
     }
 }

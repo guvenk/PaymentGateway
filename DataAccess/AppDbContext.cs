@@ -11,6 +11,8 @@ namespace DataAccess
 
         public DbSet<Merchant> Merchants { get; set; }
 
+        public DbSet<Shopper> Shoppers { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
