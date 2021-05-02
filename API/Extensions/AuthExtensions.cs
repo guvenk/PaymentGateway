@@ -2,9 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Models;
 using System.Text;
+using Models;
 
 namespace PaymentGateway
 {
@@ -12,7 +11,7 @@ namespace PaymentGateway
     {
         public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            string secret = configuration[Constants.JwtSecretKey];
+            var config = configuration.GetSection(Constants.JwtKey).Get<JwtConfig>();
 
             services.AddAuthentication(options =>
             {
@@ -22,16 +21,18 @@ namespace PaymentGateway
             })
             .AddJwtBearer(jwt =>
             {
-                var key = Encoding.UTF8.GetBytes(secret);
+                var key = Encoding.UTF8.GetBytes(config.SecretKey);
                 jwt.SaveToken = true;
                 jwt.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    RequireExpirationTime = false,
-                    ValidateLifetime = true
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = config.Issuer,
+                    ValidAudience = config.Audience
                 };
             });
         }

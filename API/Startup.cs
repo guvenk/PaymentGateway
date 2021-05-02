@@ -26,6 +26,8 @@ namespace PaymentGateway
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddAuth(Configuration);
+
             services.AddControllers();
             services.AddSwagger();
         }
@@ -42,6 +44,8 @@ namespace PaymentGateway
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

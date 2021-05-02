@@ -4,7 +4,7 @@ namespace Models
 {
     public static class Constants
     {
-        public const string JwtSecretKey = "JwtConfig:Secret";
+        public const string JwtKey = "Jwt";
         public const string DefaultConnection = "ConnectionStrings:DefaultConnection";
 
 
