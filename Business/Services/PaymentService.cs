@@ -8,7 +8,7 @@ using System;
 
 namespace Business
 {
-    public partial class PaymentService : IPaymentService
+    public class PaymentService : IPaymentService
     {
         private readonly IBankService _bankService;
         private readonly AppDbContext _dbContext;
