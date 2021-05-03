@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 
 namespace DataAccess
 {
@@ -8,7 +9,7 @@ namespace DataAccess
 
         public decimal Amount { get; set; }
 
-        public string Currency { get; set; }
+        public Currency Currency { get; set; }
 
         public bool IsSuccessful { get; set; }
 

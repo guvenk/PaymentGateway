@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Models
 {
@@ -8,13 +7,12 @@ namespace Models
         public const string JwtKey = "Jwt";
         public const string DefaultConnection = "DefaultConnection";
 
-        public static readonly Dictionary<Product, decimal> ProductPrices = new()
+        public static readonly Dictionary<Product, (decimal Price, Currency Currency)> ProductPrices = new()
         {
-            { Product.Book, 20.0M },
-            { Product.Table, 100.0M },
-            { Product.Lamp, 35.0M },
-            { Product.Monitor, 350.0M }
+            { Product.Book,     (20.0M, Currency.EUR)   },
+            { Product.Table,    (100.0M, Currency.USD)  },
+            { Product.Lamp,     (35.0M, Currency.EUR)   },
+            { Product.Monitor,  (350.0M, Currency.GBP)  }
         };
-
     }
 }

@@ -7,6 +7,7 @@ namespace Business
     public interface IPaymentService
     {
         Task<List<PaymentResponseDto>> GetPaymentsAsync(PaymentsRequestDto paymentsRequestDto);
-        Task<PaymentStatus> BuyProductAsync(PurchaseRequestDto buyProductRequestDto);
+
+        Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto purchaseRequestDto);
     }
 }

@@ -5,6 +5,6 @@ namespace Business
 {
     public interface IBankService
     {
-        Task<PaymentStatus> ProcessPaymentAsync(PurchaseRequestDto purchaseRequestDto);
+        Task<PurchaseResultDto> ProcessPaymentAsync(PurchaseRequestDto purchaseRequestDto);
     }
 }
