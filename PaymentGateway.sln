@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{94B50BB3-DBB7-4BF1-AFFA-35E8D14EE0CF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{56E8FF03-11F6-426F-8407-84243D067894}"
+	ProjectSection(SolutionItems) = preProject
+		Deployment\azure-pipelines.yaml = Deployment\azure-pipelines.yaml
+		Deployment\k8-deployment.yaml = Deployment\k8-deployment.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

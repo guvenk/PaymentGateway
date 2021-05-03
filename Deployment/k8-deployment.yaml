@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentGateway
+  labels:
+    app: paymentGateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     app: paymentGateway
+  template:
+   metadata:
+    labels:
+     app: paymentGateway
+   spec:
+    containers:
+    - name: paymentGateway
+      image: gcr.io/paymentGateway:buildId
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+        
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentGateway-srv
+  labels:
+    app: paymentGateway
+spec:
+  selector:
+    app: paymentGateway
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 80
