@@ -1,6 +1,6 @@
 ﻿using Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Models;
 using System;
 using System.Threading.Tasks;
@@ -12,18 +12,17 @@ namespace PaymentGateway.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
-        private readonly ILogger<PaymentController> _logger;
 
-        public PaymentController(IPaymentService paymentService, ILogger<PaymentController> logger)
+        public PaymentController(IPaymentService paymentService)
         {
             _paymentService = paymentService;
-            _logger = logger;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetPaymentsAsync(Guid PaymentId)
         {
-            var payments = await _paymentService.GetPaymentsAsync(PaymentId);
+            var payments = await _paymentService.GetPaymentAsync(PaymentId);
 
             if (payments is null) return NotFound();
 
@@ -31,6 +30,7 @@ namespace PaymentGateway.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PurchaseProductAsync(PurchaseRequestDto buyProductDto)
         {
             var result = await _paymentService.PurchaseProductAsync(buyProductDto);

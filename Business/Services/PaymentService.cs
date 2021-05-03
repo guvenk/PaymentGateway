@@ -25,6 +25,10 @@ namespace Business
             if (!isValid)
                 return new PurchaseResultDto(Guid.Empty, PaymentStatus.Failed);
 
+            // Validate if product exists
+            if (!Enum.IsDefined(typeof(Product), dto.Product))
+                return new PurchaseResultDto(Guid.Empty, PaymentStatus.Failed);
+
             var response = await _bankService.ProcessPaymentAsync(dto);
 
             await UpdateDb(dto, response);
@@ -72,11 +76,11 @@ namespace Business
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PaymentResponseDto> GetPaymentsAsync(Guid PaymentId)
+        public async Task<PaymentResponseDto> GetPaymentAsync(Guid paymentId)
         {
             var result = await _dbContext.Payments
                 .Include(x => x.Shopper)
-                .Where(x => x.Id == PaymentId)
+                .Where(x => x.Id == paymentId)
                 .Select(x => new PaymentResponseDto(
                 CreditCard.GetMasked(x.Shopper.CardNumber),
                 x.Shopper.FirstName,
