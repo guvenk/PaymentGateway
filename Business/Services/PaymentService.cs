@@ -51,39 +51,41 @@ namespace Business
             return response;
         }
 
-        private async Task UpdateDb(PurchaseRequestDto dto, PurchaseResultDto response)
+        private async Task UpdateDb(PurchaseRequestDto request, PurchaseResultDto response)
         {
-            var product = Constants.ProductPrices[dto.Product];
+            var product = Constants.ProductPrices[request.Product];
             var payment = new Payment
             {
                 Id = response.Id,
                 Amount = product.Price,
                 Currency = product.Currency,
                 IsSuccessful = response.PaymentStatus == PaymentStatus.Successful,
-                CreatedDate = DateTime.UtcNow
+                CreatedDate = DateTime.UtcNow,
+                MerchantId = product.MerchantId
             };
 
             var shopper = await _dbContext.Shoppers
-                .Where(x => x.CardNumber == dto.CardNumber
-                && x.Cvv == dto.Cvv
-                && x.ExpireYear == dto.ExpireYear
-                && x.ExpireMonth == dto.ExpireMonth
-                && x.FirstName == dto.FirstName
-                && x.LastName == dto.LastName)
-                .SingleOrDefaultAsync();
+                .Include(x => x.Payments)
+                .SingleOrDefaultAsync(x => x.CardNumber == request.CardNumber);
 
             if (shopper is null)
             {
                 var newShopper = new Shopper()
                 {
-                    CardNumber = dto.CardNumber,
+                    CardNumber = request.CardNumber,
+                    Cvv = request.Cvv,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    ExpireMonth = request.ExpireMonth,
+                    ExpireYear = request.ExpireYear,
                     Payments = new List<Payment> { payment }
                 };
                 _dbContext.Shoppers.Add(newShopper);
             }
             else
             {
-                shopper.Payments.Add(payment);
+                payment.ShopperId = shopper.Id;
+                _dbContext.Payments.Add(payment);
             }
 
             await _dbContext.SaveChangesAsync();

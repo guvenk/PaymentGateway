@@ -22,7 +22,7 @@ namespace PaymentGateway.Controllers
 
         [HttpGet]
         //[Authorize(Policy = "Merchant")]
-        public async Task<IActionResult> GetPaymentsAsync(PaymentsRequestDto paymentsDto)
+        public async Task<IActionResult> GetPaymentsAsync([FromQuery] PaymentsRequestDto paymentsDto)
         {
             var payments = await _paymentService.GetPaymentsAsync(paymentsDto);
 
