@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace Business
 {
@@ -12,11 +13,13 @@ namespace Business
     {
         private readonly IBankService _bankService;
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<PaymentService> _logger;
 
-        public PaymentService(IBankService bankService, AppDbContext dbContext)
+        public PaymentService(IBankService bankService, AppDbContext dbContext, ILogger<PaymentService> logger)
         {
             _bankService = bankService;
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto dto)
@@ -30,6 +33,8 @@ namespace Business
                 return new PurchaseResultDto(Guid.Empty, PaymentStatus.Failed);
 
             var response = await _bankService.ProcessPaymentAsync(dto);
+
+            _logger.LogInformation($"Bank Payment Status : {response.PaymentStatus}");
 
             await UpdateDb(dto, response);
 
@@ -73,7 +78,9 @@ namespace Business
                 _dbContext.Payments.Add(payment);
             }
 
-            await _dbContext.SaveChangesAsync();
+            int total = await _dbContext.SaveChangesAsync();
+
+            _logger.LogInformation($"Number of state entries written to db: {total}");
         }
 
         public async Task<PaymentResponseDto> GetPaymentAsync(Guid paymentId)
@@ -90,6 +97,8 @@ namespace Business
                 x.PaymentStatus))
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
+
+            _logger.LogInformation($"GetPayment with id: {paymentId} called");
 
             return result;
         }

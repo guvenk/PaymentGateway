@@ -31,6 +31,7 @@ namespace PaymentGateway
 
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IBankService, BankService>();
+            services.AddSingleton<IMetricsService, MetricsService>();
 
             services.AddControllers();
             services.AddSwagger();
@@ -48,6 +49,8 @@ namespace PaymentGateway
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<MetricsMiddleware>();
 
             app.UseAuthentication();
 
