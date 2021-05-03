@@ -8,7 +8,7 @@ using System;
 
 namespace Business
 {
-    public class PaymentService : IPaymentService
+    public partial class PaymentService : IPaymentService
     {
         private readonly IBankService _bankService;
         private readonly AppDbContext _dbContext;
@@ -19,30 +19,11 @@ namespace Business
             _dbContext = dbContext;
         }
 
-        public static bool ValidateCreditCard(string creditCardNumber)
-        {
-            // The Luhn algorithm, also known as the modulus 10 or mod 10 algorithm,
-            // is a simple checksum formula used to validate a variety of identification numbers,
-            // such as credit card numbers, IMEI numbers, Canadian Social Insurance Numbers.
-            if (string.IsNullOrEmpty(creditCardNumber))
-                return false;
-
-            int sumOfDigits = creditCardNumber.Where((e) => e >= '0' && e <= '9')
-                                              .Reverse()
-                                              .Select((e, i) => (e - 48) * (i % 2 == 0 ? 1 : 2))
-                                              .Sum((e) => (e / 10) + (e % 10));
-
-            return sumOfDigits % 10 == 0;
-        }
-
         public async Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto dto)
         {
-            // validate card info before sending to bank
-            var isValid = ValidateCreditCard(dto.CardNumber);
+            var isValid = CreditCard.Validate(dto.CardNumber);
             if (!isValid)
-            {
-                return new PurchaseResultDto(Guid.Empty, PaymentStatus.Failed, "Invalid Credit Card.");
-            }
+                return new PurchaseResultDto(Guid.Empty, PaymentStatus.Failed);
 
             var response = await _bankService.ProcessPaymentAsync(dto);
 

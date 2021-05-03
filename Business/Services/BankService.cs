@@ -10,11 +10,9 @@ namespace Business
         {
             Random rnd = new();
             bool isSuccessfull = rnd.NextDouble() >= 0.5;
-
             var status = isSuccessfull ? PaymentStatus.Successful : PaymentStatus.Failed;
-            string failureReason = isSuccessfull ? null : "Acquiring bank failed to process the transaction.";
 
-            var result = new PurchaseResultDto(Guid.NewGuid(), status, failureReason);
+            var result = new PurchaseResultDto(Guid.NewGuid(), status);
             return await Task.FromResult(result);
         }
     }

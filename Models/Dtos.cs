@@ -16,6 +16,5 @@ namespace Models
         [Range(1, int.MaxValue)] int ExpireYear,
         [Range(100, 999)] int Cvv);
 
-    public record PurchaseResultDto(Guid Id, PaymentStatus PaymentStatus, string FailureReason);
-
+    public record PurchaseResultDto(Guid Id, PaymentStatus PaymentStatus);
 }
