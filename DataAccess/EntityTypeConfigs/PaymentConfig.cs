@@ -22,13 +22,12 @@ namespace DataAccess.EntityTypeConfigs
                 .IsRequired()
                 .HasMaxLength(10);
 
-            builder.Property(x => x.IsSuccessful)
+            builder.Property(x => x.PaymentStatus)
                 .IsRequired();
 
             builder.Property(a => a.CreatedDate)
                 .IsRequired()
                 .HasColumnType("datetime2(2)");
-
 
             var payments = new List<Payment>{
                 new Payment
@@ -37,7 +36,7 @@ namespace DataAccess.EntityTypeConfigs
                     Amount = 1000.000M,
                     CreatedDate = DateTime.UtcNow,
                     Currency =  Currency.EUR,
-                    IsSuccessful = true,
+                    PaymentStatus = PaymentStatus.Successful,
                     MerchantId = 1L,
                     ShopperId = 1L,
                 }

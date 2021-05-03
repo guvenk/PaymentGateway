@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210503162529_init")]
+    [Migration("20210503194824_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,13 +67,13 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasColumnName("currency");
 
-                    b.Property<bool>("IsSuccessful")
-                        .HasColumnType("bit")
-                        .HasColumnName("isSuccessful");
-
                     b.Property<long>("MerchantId")
                         .HasColumnType("bigint")
                         .HasColumnName("merchantId");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int")
+                        .HasColumnName("paymentStatus");
 
                     b.Property<long>("ShopperId")
                         .HasColumnType("bigint")
@@ -92,10 +92,10 @@ namespace DataAccess.Migrations
                         {
                             Id = new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"),
                             Amount = 1000.000m,
-                            CreatedDate = new DateTime(2021, 5, 3, 16, 25, 28, 700, DateTimeKind.Utc).AddTicks(9447),
+                            CreatedDate = new DateTime(2021, 5, 3, 19, 48, 24, 4, DateTimeKind.Utc).AddTicks(1932),
                             Currency = 0,
-                            IsSuccessful = true,
                             MerchantId = 1L,
+                            PaymentStatus = 0,
                             ShopperId = 1L
                         });
                 });

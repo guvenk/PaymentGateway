@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Business
 {
@@ -19,6 +20,14 @@ namespace Business
                                               .Sum((e) => (e / 10) + (e % 10));
 
             return sumOfDigits % 10 == 0;
+        }
+
+        public static string GetMasked(string creditCardNumber)
+        {
+            var reg = new Regex(@"(?<=\d{4}[ -]?\d{2})\d{2}[ -]?\d{4}");
+            string result = reg.Replace(creditCardNumber, new MatchEvaluator((m) => new string('*', m.Length)));
+
+            return result;
         }
     }
 }

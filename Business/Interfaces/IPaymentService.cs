@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,7 +7,7 @@ namespace Business
 {
     public interface IPaymentService
     {
-        Task<List<PaymentResponseDto>> GetPaymentsAsync(PaymentsRequestDto paymentsRequestDto);
+        Task<PaymentResponseDto> GetPaymentsAsync(Guid PaymentId);
 
         Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto purchaseRequestDto);
     }

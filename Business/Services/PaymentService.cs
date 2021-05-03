@@ -40,7 +40,7 @@ namespace Business
                 Id = response.Id,
                 Amount = product.Price,
                 Currency = product.Currency,
-                IsSuccessful = response.PaymentStatus == PaymentStatus.Successful,
+                PaymentStatus = response.PaymentStatus,
                 CreatedDate = DateTime.UtcNow,
                 MerchantId = product.MerchantId
             };
@@ -72,20 +72,20 @@ namespace Business
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<PaymentResponseDto>> GetPaymentsAsync(PaymentsRequestDto paymentsRequestDto)
+        public async Task<PaymentResponseDto> GetPaymentsAsync(Guid PaymentId)
         {
-            var query = _dbContext.Payments.AsQueryable();
-
-            if (paymentsRequestDto.ShopperId.HasValue)
-                query = query.Where(x => x.ShopperId == paymentsRequestDto.ShopperId);
-            if (paymentsRequestDto.MerchantId.HasValue)
-                query = query.Where(x => x.MerchantId == paymentsRequestDto.MerchantId);
-            if (paymentsRequestDto.PaymentId.HasValue)
-                query = query.Where(x => x.Id == paymentsRequestDto.PaymentId);
-
-            var result = await query.Select(x => new PaymentResponseDto(x.Id, x.Amount, x.Currency.ToString(), x.IsSuccessful, x.CreatedDate, x.ShopperId))
+            var result = await _dbContext.Payments
+                .Include(x => x.Shopper)
+                .Where(x => x.Id == PaymentId)
+                .Select(x => new PaymentResponseDto(
+                CreditCard.GetMasked(x.Shopper.CardNumber),
+                x.Shopper.FirstName,
+                x.Shopper.LastName,
+                x.Shopper.ExpireMonth,
+                x.Shopper.ExpireYear,
+                x.PaymentStatus))
                 .AsNoTracking()
-                .ToListAsync();
+                .SingleOrDefaultAsync();
 
             return result;
         }

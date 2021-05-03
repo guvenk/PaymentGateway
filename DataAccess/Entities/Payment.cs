@@ -11,7 +11,7 @@ namespace DataAccess
 
         public Currency Currency { get; set; }
 
-        public bool IsSuccessful { get; set; }
+        public PaymentStatus PaymentStatus { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

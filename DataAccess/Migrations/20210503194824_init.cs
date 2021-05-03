@@ -45,7 +45,7 @@ namespace DataAccess.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     amount = table.Column<decimal>(type: "decimal(15,3)", nullable: false),
                     currency = table.Column<int>(type: "int", maxLength: 10, nullable: false),
-                    isSuccessful = table.Column<bool>(type: "bit", nullable: false),
+                    paymentStatus = table.Column<int>(type: "int", nullable: false),
                     createdDate = table.Column<DateTime>(type: "datetime2(2)", nullable: false),
                     merchantId = table.Column<long>(type: "bigint", nullable: false),
                     shopperId = table.Column<long>(type: "bigint", nullable: false)
@@ -79,8 +79,8 @@ namespace DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "payment",
-                columns: new[] { "id", "amount", "createdDate", "currency", "isSuccessful", "merchantId", "shopperId" },
-                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 1000.000m, new DateTime(2021, 5, 3, 16, 25, 28, 700, DateTimeKind.Utc).AddTicks(9447), 0, true, 1L, 1L });
+                columns: new[] { "id", "amount", "createdDate", "currency", "merchantId", "paymentStatus", "shopperId" },
+                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 1000.000m, new DateTime(2021, 5, 3, 19, 48, 24, 4, DateTimeKind.Utc).AddTicks(1932), 0, 1L, 0, 1L });
 
             migrationBuilder.CreateIndex(
                 name: "IX_payment_merchantId",
