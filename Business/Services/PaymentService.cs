@@ -3,7 +3,6 @@ using DataAccess;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
@@ -78,12 +77,12 @@ namespace Business
                 MerchantId = product.MerchantId
             };
 
-            int total = await SyncPaymentAndShopperAsync(request, payment);
+            int total = await InsertPaymentAndShopperAsync(request, payment);
 
             _logger.LogInformation($"Number of entries written to db: {total}");
         }
 
-        private async Task<int> SyncPaymentAndShopperAsync(PurchaseRequestDto request, Payment payment)
+        private async Task<int> InsertPaymentAndShopperAsync(PurchaseRequestDto request, Payment payment)
         {
             string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
             string cvv = request.Cvv.Encrypt(_encryptionKey);
@@ -112,6 +111,5 @@ namespace Business
 
             return await _dbContext.SaveChangesAsync();
         }
-
     }
 }
