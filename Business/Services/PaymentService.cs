@@ -59,12 +59,12 @@ namespace Business
 
             _logger.LogInformation($"Bank Payment Status : {response.PaymentStatus}");
 
-            await UpdateDb(dto, response);
+            await CreatePaymentAsync(dto, response);
 
             return response;
         }
 
-        private async Task UpdateDb(PurchaseRequestDto request, PurchaseResultDto response)
+        private async Task CreatePaymentAsync(PurchaseRequestDto request, PurchaseResultDto response)
         {
             var product = Constants.ProductPrices[request.Product];
             var payment = new Payment
@@ -77,13 +77,12 @@ namespace Business
                 MerchantId = product.MerchantId
             };
 
-            int total = await SyncPaymentAndShopper(request, payment);
-
+            int total = await SyncPaymentAndShopperAsync(request, payment);
 
             _logger.LogInformation($"Number of entries written to db: {total}");
         }
 
-        private async Task<int> SyncPaymentAndShopper(PurchaseRequestDto request, Payment payment)
+        private async Task<int> SyncPaymentAndShopperAsync(PurchaseRequestDto request, Payment payment)
         {
             string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
             string cvv = request.Cvv.Encrypt(_encryptionKey);

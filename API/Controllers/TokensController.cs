@@ -20,7 +20,7 @@ namespace PaymentGateway.Controllers
         {
             var config = _configuration.GetSection(Constants.JwtKey).Get<JwtConfig>();
 
-            string token = Auth.GenerateJwtToken(config, "test@email.com");
+            string token = Auth.GenerateJwtToken(config, Constants.TestUser);
 
             return Ok(token);
         }

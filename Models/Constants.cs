@@ -6,6 +6,7 @@ namespace Models
     {
         public const string JwtKey = "Jwt";
         public const string DefaultConnection = "DefaultConnection";
+        public const string TestUser = "test@email.com";
 
         public static readonly Dictionary<Product, (decimal Price, Currency Currency, long MerchantId)> ProductPrices = new()
         {
