@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System;
 
-namespace Business
+namespace PaymentGateway
 {
     public static class Auth
     {

@@ -29,6 +29,6 @@
 	</ItemGroup>
 
 	<Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
-		<Exec Command="swagger tofile --serializeasv2 --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll v1" />
+		<Exec Command="swagger tofile --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll v1" />
 	</Target>
 </Project>
