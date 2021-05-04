@@ -52,7 +52,6 @@ namespace Tests.Unit
         public async Task GetPayment_WithEncryption_Success()
         {
             // Arrange
-            var id = Guid.NewGuid();
             var shopper = new Shopper
             {
                 Id = 1,
@@ -66,7 +65,7 @@ namespace Tests.Unit
 
             var paymentDb = new Payment()
             {
-                Id = id,
+                Id = Guid.NewGuid(),
                 Amount = 123.5M,
                 CreatedDate = DateTime.UtcNow,
                 Currency = Currency.EUR,
@@ -74,12 +73,12 @@ namespace Tests.Unit
                 Merchant = new Merchant { Id = 1, Name = "Test Merchant" },
                 Shopper = shopper
             };
-            dbContext.Payments.Add(paymentDb);
 
+            dbContext.Payments.Add(paymentDb);
             await dbContext.SaveChangesAsync();
 
             // Act
-            var payment = await sut.GetPaymentAsync(id);
+            var payment = await sut.GetPaymentAsync(paymentDb.Id);
 
             // Assert
             Assert.NotNull(payment);
