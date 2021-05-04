@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Business
 {
-    public static class EncryptionUtil
+    public static class Encryption
     {
         public static string Encrypt(this string plainText, string key)
         {
