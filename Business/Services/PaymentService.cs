@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Business
 {
@@ -14,12 +15,13 @@ namespace Business
         private readonly IBankService _bankService;
         private readonly AppDbContext _dbContext;
         private readonly ILogger<PaymentService> _logger;
-
-        public PaymentService(IBankService bankService, AppDbContext dbContext, ILogger<PaymentService> logger)
+        private readonly string _encryptionKey;
+        public PaymentService(IBankService bankService, AppDbContext dbContext, ILogger<PaymentService> logger, IConfiguration configuration)
         {
             _bankService = bankService;
             _dbContext = dbContext;
             _logger = logger;
+            _encryptionKey = configuration["EncryptionKey"].ToString();
         }
 
         public async Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto dto)
@@ -60,10 +62,13 @@ namespace Business
 
             if (shopper is null)
             {
+                string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
+                string cvv = request.Cvv.ToString().Encrypt(_encryptionKey);
+
                 var newShopper = new Shopper()
                 {
-                    CardNumber = request.CardNumber,
-                    Cvv = request.Cvv,
+                    CardNumber = cardNumber,
+                    Cvv = cvv,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     ExpireMonth = request.ExpireMonth,
@@ -91,12 +96,12 @@ namespace Business
                 .Include(x => x.Shopper)
                 .Where(x => x.Id == paymentId)
                 .Select(x => new PaymentResponseDto(
-                CreditCard.GetMasked(x.Shopper.CardNumber),
+                CreditCard.GetMasked(x.Shopper.CardNumber.Decrypt(_encryptionKey)),
                 x.Shopper.FirstName,
                 x.Shopper.LastName,
                 x.Shopper.ExpireMonth,
                 x.Shopper.ExpireYear,
-                x.Shopper.Cvv,
+                x.Shopper.Cvv.Decrypt(_encryptionKey),
                 x.PaymentStatus))
                 .AsNoTracking()
                 .SingleOrDefaultAsync();

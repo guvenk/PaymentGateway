@@ -26,7 +26,7 @@ namespace APIConsumer
             Console.WriteLine($"Expiry: {payment.ExpireMonth}/{payment.ExpireYear} Cvv: {payment.Cvv}");
             Console.WriteLine($"Payment Status: {payment.PaymentStatus}");
 
-            var body = new PurchaseRequestDto { CardNumber = "4012-8888-8888-1881", FirstName = "Sarah", LastName = "Connor", Cvv = 678, ExpireMonth = 5, ExpireYear = 2090, Product = Product._3 };
+            var body = new PurchaseRequestDto { CardNumber = "4012-8888-8888-1881", FirstName = "Sarah", LastName = "Connor", Cvv = "678", ExpireMonth = 5, ExpireYear = 2090, Product = Product._3 };
             var purchaseResponse = await paymentClient.PurchaseProductAsync(body);
 
             Console.WriteLine($"Purchase response: Id: {purchaseResponse.Id} StatusCode: {purchaseResponse.PaymentStatus}");

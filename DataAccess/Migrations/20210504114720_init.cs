@@ -28,10 +28,10 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    cardNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    cardNumber = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     expireMonth = table.Column<int>(type: "int", nullable: false),
                     expireYear = table.Column<int>(type: "int", nullable: false),
-                    cvv = table.Column<int>(type: "int", nullable: false)
+                    cvv = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,12 +75,12 @@ namespace DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "shopper",
                 columns: new[] { "id", "cardNumber", "cvv", "expireMonth", "expireYear", "firstName", "lastName" },
-                values: new object[] { 1L, "3333-4444-5555-6666", 333, 12, 2025, "John", "Smith" });
+                values: new object[] { 1L, "vHOScgRyhq1RCQCZ2Kb08OaleMrcR8Q42dPae1hX/yc=", "kFUwtPfKQ3M+LG3idKODhQ==", 12, 2025, "John", "Smith" });
 
             migrationBuilder.InsertData(
                 table: "payment",
                 columns: new[] { "id", "amount", "createdDate", "currency", "merchantId", "paymentStatus", "shopperId" },
-                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 1000.000m, new DateTime(2021, 5, 3, 19, 48, 24, 4, DateTimeKind.Utc).AddTicks(1932), 0, 1L, 0, 1L });
+                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 1000.000m, new DateTime(2021, 5, 4, 11, 47, 20, 228, DateTimeKind.Utc).AddTicks(9721), 0, 1L, 0, 1L });
 
             migrationBuilder.CreateIndex(
                 name: "IX_payment_merchantId",

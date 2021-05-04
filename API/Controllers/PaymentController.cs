@@ -18,10 +18,15 @@ namespace PaymentGateway.Controllers
             _paymentService = paymentService;
         }
 
+        // Name are used for API Client generation to produce friendly names
         [HttpGet(Name = nameof(GetPaymentAsync))]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<PaymentResponseDto>> GetPaymentAsync(Guid PaymentId)
         {
+            //var key = "b14ca5898a4e4133bbce2ea2315a1916";
+            //var strEnc = EncryptionUtil.Encrypt("333", "b14ca5898a4e4133bbce2ea2315a1916");
+            //var strDecrypted = EncryptionUtil.Decrypt(strEnc, "b14ca5898a4e4133bbce2ea2315a1916");
+
             var payments = await _paymentService.GetPaymentAsync(PaymentId);
 
             if (payments is null) return NotFound();

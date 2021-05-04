@@ -7,6 +7,7 @@ A sample project for a payment gateway
 - Project requires a SQL or SQLEXPRESS instance to be available. Connection string in appsettings.json should be adjusted accordingly.
 - Please use Update-Database command on Package Manager Console to create the database.
 - .Net Core 5.0 SDK must be installed.
+- Please run "dotnet tool install -g swashbuckle.aspnetcore.cli" on Command Prompt for API client generation to work
 
 ## Libraries and Frameworks
 - .Net Core 5.0
@@ -26,8 +27,10 @@ A sample project for a payment gateway
 ## API
 
 
-## Database Structure
 
+## Encryption & Decryption
+
+Module is the one doing the encryption and the one which needs to decrypt it. Therefore I have utilized "Symmetric Encryption" strategy.
 
 
 ## Testing Project

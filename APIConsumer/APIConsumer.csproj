@@ -6,7 +6,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<OpenApiReference Include="..\API\bin\Debug\net5.0\API.json" CodeGenerator="NSwagCSharp" Namespace="PaymentAPI" ClassName="PaymentAPIClient" OutputPath="PaymentAPIClient.cs" Link="OpenAPIs\API.json" />
+		<OpenApiReference Include="..\API\bin\Debug\net5.0\API.json"
+						  CodeGenerator="NSwagCSharp"
+						  Namespace="PaymentAPI"
+						  ClassName="PaymentAPIClient"
+						  OutputPath="PaymentAPIClient.cs"
+						  Link="OpenAPIs\API.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -20,6 +25,5 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
-
 
 </Project>

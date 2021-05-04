@@ -90,7 +90,7 @@ namespace DataAccess.Migrations
                         {
                             Id = new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"),
                             Amount = 1000.000m,
-                            CreatedDate = new DateTime(2021, 5, 3, 19, 48, 24, 4, DateTimeKind.Utc).AddTicks(1932),
+                            CreatedDate = new DateTime(2021, 5, 4, 11, 47, 20, 228, DateTimeKind.Utc).AddTicks(9721),
                             Currency = 0,
                             MerchantId = 1L,
                             PaymentStatus = 0,
@@ -108,12 +108,14 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("CardNumber")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)")
                         .HasColumnName("cardNumber");
 
-                    b.Property<int>("Cvv")
-                        .HasColumnType("int")
+                    b.Property<string>("Cvv")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)")
                         .HasColumnName("cvv");
 
                     b.Property<int>("ExpireMonth")
@@ -144,8 +146,8 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 1L,
-                            CardNumber = "3333-4444-5555-6666",
-                            Cvv = 333,
+                            CardNumber = "vHOScgRyhq1RCQCZ2Kb08OaleMrcR8Q42dPae1hX/yc=",
+                            Cvv = "kFUwtPfKQ3M+LG3idKODhQ==",
                             ExpireMonth = 12,
                             ExpireYear = 2025,
                             FirstName = "John",

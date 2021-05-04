@@ -16,7 +16,7 @@ namespace DataAccess
 
         public int ExpireYear { get; set; }
 
-        public int Cvv { get; set; }
+        public string Cvv { get; set; }
 
         public ICollection<Payment> Payments { get; set; }
     }
