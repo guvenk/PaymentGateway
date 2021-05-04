@@ -70,7 +70,9 @@ namespace Business
                     ExpireYear = request.ExpireYear,
                     Payments = new List<Payment> { payment }
                 };
+
                 _dbContext.Shoppers.Add(newShopper);
+                _logger.LogInformation($"New shopper created: {request.FirstName} {request.LastName}");
             }
             else
             {
@@ -80,7 +82,7 @@ namespace Business
 
             int total = await _dbContext.SaveChangesAsync();
 
-            _logger.LogInformation($"Number of state entries written to db: {total}");
+            _logger.LogInformation($"Number of entries written to db: {total}");
         }
 
         public async Task<PaymentResponseDto> GetPaymentAsync(Guid paymentId)
@@ -94,6 +96,7 @@ namespace Business
                 x.Shopper.LastName,
                 x.Shopper.ExpireMonth,
                 x.Shopper.ExpireYear,
+                x.Shopper.Cvv,
                 x.PaymentStatus))
                 .AsNoTracking()
                 .SingleOrDefaultAsync();

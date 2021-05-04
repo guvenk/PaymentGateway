@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
-    public record PaymentResponseDto(string CardNumber, string FirstName, string LastName, int ExpireMonth, int ExpireYear, PaymentStatus PaymentStatus);
+    public record PaymentResponseDto(string CardNumber, string FirstName, string LastName, int ExpireMonth, int ExpireYear, int Cvv, PaymentStatus PaymentStatus);
 
     public record PurchaseRequestDto(
         [Required] Product Product,

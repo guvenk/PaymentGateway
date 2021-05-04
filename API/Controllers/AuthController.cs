@@ -10,13 +10,13 @@ namespace PaymentGateway.Controllers
     {
         private readonly IConfiguration _configuration;
 
-        public AuthController( IConfiguration configuration)
+        public AuthController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        [HttpGet("token")]
-        public IActionResult GetToken()
+        [HttpGet("token", Name = nameof(GetToken))]
+        public ActionResult<string> GetToken()
         {
             var config = _configuration.GetSection(Constants.JwtKey).Get<JwtConfig>();
 

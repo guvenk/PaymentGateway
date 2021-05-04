@@ -18,9 +18,9 @@ namespace PaymentGateway.Controllers
             _paymentService = paymentService;
         }
 
-        [HttpGet]
+        [HttpGet(Name = nameof(GetPaymentAsync))]
         [Authorize]
-        public async Task<IActionResult> GetPaymentsAsync(Guid PaymentId)
+        public async Task<ActionResult<PaymentResponseDto>> GetPaymentAsync(Guid PaymentId)
         {
             var payments = await _paymentService.GetPaymentAsync(PaymentId);
 
@@ -29,9 +29,9 @@ namespace PaymentGateway.Controllers
             return Ok(payments);
         }
 
-        [HttpPost]
+        [HttpPost(Name = nameof(PurchaseProductAsync))]
         [Authorize]
-        public async Task<IActionResult> PurchaseProductAsync(PurchaseRequestDto buyProductDto)
+        public async Task<ActionResult<PurchaseResultDto>> PurchaseProductAsync(PurchaseRequestDto buyProductDto)
         {
             var result = await _paymentService.PurchaseProductAsync(buyProductDto);
 

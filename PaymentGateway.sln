@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", 
 		Deployment\k8-deployment.yaml = Deployment\k8-deployment.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIConsumer", "APIConsumer\APIConsumer.csproj", "{66D6702B-0ACE-41B1-9BA5-9F0FC9758040}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{94B50BB3-DBB7-4BF1-AFFA-35E8D14EE0CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94B50BB3-DBB7-4BF1-AFFA-35E8D14EE0CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B50BB3-DBB7-4BF1-AFFA-35E8D14EE0CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D6702B-0ACE-41B1-9BA5-9F0FC9758040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D6702B-0ACE-41B1-9BA5-9F0FC9758040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D6702B-0ACE-41B1-9BA5-9F0FC9758040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D6702B-0ACE-41B1-9BA5-9F0FC9758040}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

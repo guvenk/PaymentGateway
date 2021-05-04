@@ -16,7 +16,7 @@ spec:
    spec:
     containers:
     - name: paymentGateway
-      image: gcr.io/paymentGateway:buildId
+      image: containerRegistryUri/paymentGateway:buildId
       imagePullPolicy: Always
       ports:
         - containerPort: 80
