@@ -56,15 +56,15 @@ namespace Business
                 MerchantId = product.MerchantId
             };
 
+            string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
+            string cvv = request.Cvv.ToString().Encrypt(_encryptionKey);
+
             var shopper = await _dbContext.Shoppers
                 .Include(x => x.Payments)
-                .SingleOrDefaultAsync(x => x.CardNumber == request.CardNumber);
+                .SingleOrDefaultAsync(x => x.CardNumber == cardNumber && x.Cvv == cvv);
 
             if (shopper is null)
             {
-                string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
-                string cvv = request.Cvv.ToString().Encrypt(_encryptionKey);
-
                 var newShopper = new Shopper()
                 {
                     CardNumber = cardNumber,

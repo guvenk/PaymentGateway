@@ -8,9 +8,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System;
 
-namespace PaymentGateway
+namespace Business
 {
-    public static class AuthUtil
+    public static class Auth
     {
         public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
         {

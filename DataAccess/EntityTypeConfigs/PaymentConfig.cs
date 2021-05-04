@@ -33,9 +33,9 @@ namespace DataAccess.EntityTypeConfigs
                 new Payment
                 {
                     Id = Guid.Parse("0A036FBA-2BBF-4530-A90C-C0D07C3FD23A"),
-                    Amount = 1000.000M,
+                    Amount = 100.000M,
                     CreatedDate = DateTime.UtcNow,
-                    Currency =  Currency.EUR,
+                    Currency =  Currency.USD,
                     PaymentStatus = PaymentStatus.Successful,
                     MerchantId = 1L,
                     ShopperId = 1L,

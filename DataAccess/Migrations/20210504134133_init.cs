@@ -80,7 +80,7 @@ namespace DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "payment",
                 columns: new[] { "id", "amount", "createdDate", "currency", "merchantId", "paymentStatus", "shopperId" },
-                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 1000.000m, new DateTime(2021, 5, 4, 11, 47, 20, 228, DateTimeKind.Utc).AddTicks(9721), 0, 1L, 0, 1L });
+                values: new object[] { new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"), 100.000m, new DateTime(2021, 5, 4, 13, 41, 32, 691, DateTimeKind.Utc).AddTicks(5493), 1, 1L, 0, 1L });
 
             migrationBuilder.CreateIndex(
                 name: "IX_payment_merchantId",

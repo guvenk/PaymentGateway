@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210504114720_init")]
+    [Migration("20210504134133_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,9 +91,9 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = new Guid("0a036fba-2bbf-4530-a90c-c0d07c3fd23a"),
-                            Amount = 1000.000m,
-                            CreatedDate = new DateTime(2021, 5, 4, 11, 47, 20, 228, DateTimeKind.Utc).AddTicks(9721),
-                            Currency = 0,
+                            Amount = 100.000m,
+                            CreatedDate = new DateTime(2021, 5, 4, 13, 41, 32, 691, DateTimeKind.Utc).AddTicks(5493),
+                            Currency = 1,
                             MerchantId = 1L,
                             PaymentStatus = 0,
                             ShopperId = 1L

@@ -9,18 +9,18 @@ namespace PaymentGateway.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PaymentController : ControllerBase
+    public class PaymentsController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentsController(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
 
         // Name are used for API Client generation to produce friendly names
         [HttpGet(Name = nameof(GetPaymentAsync))]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<PaymentResponseDto>> GetPaymentAsync(Guid PaymentId)
         {
             var payments = await _paymentService.GetPaymentAsync(PaymentId);

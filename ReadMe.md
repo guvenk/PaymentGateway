@@ -11,16 +11,13 @@ A sample project for a payment gateway
 - Please run "dotnet tool install -g swashbuckle.aspnetcore.cli" on Command Prompt for API client generation to work
 
 
-## Libraries and Frameworks
-- .Net Core 5.0
-- EF Core 5.0
-- Automapper 10.1.1 is utilized to map dto classes to entities and vice versa for user to consume the api.
-- Swashbuckle.AspNetCore 5.6.3 to have auto generated documentation of the API
-- Xunit 2.4.1 testing library.
-- Microsoft.EntityFrameworkCore.InMemory 5.0.5 this is utilized for testing purposes on test layer.
-- Moq 4.16.1 this one is installed but not utilized. it would be utilized for upcoming tests for their dependency injected services to be mocked.
+## General Ideas
 
-
+- I have hardcoded the products and their prices as a dictionary for simplicity. They could be fetched from merchants as well.
+- Logging is only to a file in C:\Logs\ directory, could be sent to elastic search or other log storage providers.
+- Very simplistic auth mechanism used for showcasing them.
+- Azure ci/cd pipelines and k8s-deployment is used for showcasing, they would work when connected to an infrastructure
+- Project can be run with Kestrel, IIS and Docker as well.
 ## Usage
 
 - Build the solution with Visual Studio or 'dotnet build' command with dotnet CLI.using 
@@ -29,6 +26,8 @@ A sample project for a payment gateway
 - You can generate & use a token using [GET]auth/token endpoint.
 
 ## API
+
+- I have hardcoded the products and their prices as a dictionary for simplicity. They could be fetched from merchants as well.
 
 - Brotli and GZIP Compressions are available for responses. To utilize add Accept-Encoding header with either "gzip" or "br" as values.
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PaymentGateway
 {
-    public static class SwaggerExtensions
+    public static class Swagger
     {
         public static void AddSwagger(this IServiceCollection services)
         {
