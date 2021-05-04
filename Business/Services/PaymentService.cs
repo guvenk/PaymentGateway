@@ -24,6 +24,27 @@ namespace Business
             _encryptionKey = configuration["EncryptionKey"].ToString();
         }
 
+        public async Task<PaymentResponseDto> GetPaymentAsync(Guid paymentId)
+        {
+            var result = await _dbContext.Payments
+                .Include(x => x.Shopper)
+                .Where(x => x.Id == paymentId)
+                .Select(x => new PaymentResponseDto(
+                CreditCard.GetMasked(x.Shopper.CardNumber.Decrypt(_encryptionKey)),
+                x.Shopper.FirstName,
+                x.Shopper.LastName,
+                x.Shopper.ExpireMonth,
+                x.Shopper.ExpireYear,
+                x.Shopper.Cvv.Decrypt(_encryptionKey),
+                x.PaymentStatus))
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+
+            _logger.LogInformation($"GetPayment with id: {paymentId} called");
+
+            return result;
+        }
+
         public async Task<PurchaseResultDto> PurchaseProductAsync(PurchaseRequestDto dto)
         {
             var isValid = CreditCard.Validate(dto.CardNumber);
@@ -56,8 +77,16 @@ namespace Business
                 MerchantId = product.MerchantId
             };
 
+            int total = await SyncPaymentAndShopper(request, payment);
+
+
+            _logger.LogInformation($"Number of entries written to db: {total}");
+        }
+
+        private async Task<int> SyncPaymentAndShopper(PurchaseRequestDto request, Payment payment)
+        {
             string cardNumber = request.CardNumber.Encrypt(_encryptionKey);
-            string cvv = request.Cvv.ToString().Encrypt(_encryptionKey);
+            string cvv = request.Cvv.Encrypt(_encryptionKey);
 
             var shopper = await _dbContext.Shoppers
                 .Include(x => x.Payments)
@@ -65,50 +94,24 @@ namespace Business
 
             if (shopper is null)
             {
-                var newShopper = new Shopper()
+                shopper = new Shopper()
                 {
                     CardNumber = cardNumber,
                     Cvv = cvv,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     ExpireMonth = request.ExpireMonth,
-                    ExpireYear = request.ExpireYear,
-                    Payments = new List<Payment> { payment }
+                    ExpireYear = request.ExpireYear
                 };
 
-                _dbContext.Shoppers.Add(newShopper);
                 _logger.LogInformation($"New shopper created: {request.FirstName} {request.LastName}");
             }
-            else
-            {
-                payment.ShopperId = shopper.Id;
-                _dbContext.Payments.Add(payment);
-            }
 
-            int total = await _dbContext.SaveChangesAsync();
+            payment.Shopper = shopper;
+            _dbContext.Payments.Add(payment);
 
-            _logger.LogInformation($"Number of entries written to db: {total}");
+            return await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<PaymentResponseDto> GetPaymentAsync(Guid paymentId)
-        {
-            var result = await _dbContext.Payments
-                .Include(x => x.Shopper)
-                .Where(x => x.Id == paymentId)
-                .Select(x => new PaymentResponseDto(
-                CreditCard.GetMasked(x.Shopper.CardNumber.Decrypt(_encryptionKey)),
-                x.Shopper.FirstName,
-                x.Shopper.LastName,
-                x.Shopper.ExpireMonth,
-                x.Shopper.ExpireYear,
-                x.Shopper.Cvv.Decrypt(_encryptionKey),
-                x.PaymentStatus))
-                .AsNoTracking()
-                .SingleOrDefaultAsync();
-
-            _logger.LogInformation($"GetPayment with id: {paymentId} called");
-
-            return result;
-        }
     }
 }
