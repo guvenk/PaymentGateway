@@ -2,6 +2,7 @@ using Business;
 using DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,8 @@ namespace PaymentGateway
 
             services.AddAuth(Configuration);
 
+            services.AddResponseCompression(options => options.EnableForHttps = true);
+
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IBankService, BankService>();
             services.AddSingleton<IMetricsService, MetricsService>();
@@ -55,6 +58,8 @@ namespace PaymentGateway
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseResponseCompression();
 
             app.UseEndpoints(endpoints =>
             {
