@@ -16,6 +16,7 @@ namespace Business
         private readonly AppDbContext _dbContext;
         private readonly ILogger<PaymentService> _logger;
         private readonly string _encryptionKey;
+
         public PaymentService(IBankService bankService, AppDbContext dbContext, ILogger<PaymentService> logger, IConfiguration configuration)
         {
             _bankService = bankService;
