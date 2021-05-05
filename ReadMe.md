@@ -15,9 +15,9 @@ A sample project for a payment gateway
 - Used simplistic auth mechanism without custom policies. Implemented JWT generation and validation using key,issuer,audience and lifetime.
 - After building API project, APIClient project needs to be build so that API client is generated automatically on build. Flow:  make a visible change on API endpoints > build API > build APIClient > Eh Voilà! the change will be visible on APIClient codebase
 - Azure ci/cd pipelines and k8s-deployment is used for showcasing, they would work when connected to an infrastructure
-- Project can be run with Kestrel, IIS and Docker.
+- Project can be run with Kestrel, IIS and Docker. Docker instance doesnt have SQL server so its not able to access db. It would need docker-compose to be set up for it to work but I would prefer to use k8s deployment and a stateful set for SQL Server, therefore I didnt go further on that.
 - Logging is only to a file in C:\Logs\ directory, could be sent to elastic search or other log storage providers.
-- Metrics are collected using Prometheus libarary. I've created a middleware that collects the metrics.
+- Metrics are collected using Prometheus. I've created a middleware that collects the metrics.
 
 ## Usage
 
