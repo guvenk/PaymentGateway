@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Net.Http.Headers;
 
 namespace Tests
 {
@@ -30,13 +31,11 @@ namespace Tests
                 if (descriptor != null)
                     services.Remove(descriptor);
 
-                services.AddDbContext<AppDbContext>((options, context) =>
-                {
-                    context.UseInMemoryDatabase("InMemoryDb");
-                });
+                services.AddDbContext<AppDbContext>((options, context) => context.UseInMemoryDatabase("InMemoryDb"));
 
                 var sp = services.BuildServiceProvider();
                 var scopedServices = sp.CreateScope().ServiceProvider;
+
                 Configuration = scopedServices.GetRequiredService<IConfiguration>();
                 DbContext = scopedServices.GetRequiredService<AppDbContext>();
                 DbContext.Database.EnsureCreated();
@@ -47,7 +46,7 @@ namespace Tests
         {
             base.ConfigureClient(client);
             string token = GenerateJwtToken();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public string GenerateJwtToken()
@@ -55,7 +54,6 @@ namespace Tests
             var config = Configuration.GetSection(Constants.JwtKey).Get<JwtConfig>();
 
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-
             var key = Encoding.UTF8.GetBytes(config.SecretKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -71,7 +69,6 @@ namespace Tests
             };
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
-
             string result = jwtTokenHandler.WriteToken(token);
 
             return result;
