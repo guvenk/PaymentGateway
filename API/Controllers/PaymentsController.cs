@@ -30,6 +30,16 @@ namespace PaymentGateway.Controllers
             return Ok(payments);
         }
 
+        //Sample input
+        //{
+        //  "product": 2,
+        //  "firstName": "guven",
+        //  "lastName": "kurt",
+        //  "cardNumber": "2222 4000 7000 0005",
+        //  "expireMonth": 12,
+        //  "expireYear": 2024,
+        //  "cvv": "444"
+        //}
         [HttpPost(Name = nameof(PurchaseProductAsync))]
         [Authorize]
         public async Task<ActionResult<PurchaseResultDto>> PurchaseProductAsync(PurchaseRequestDto buyProductDto)

@@ -17,6 +17,9 @@ namespace APIConsumer
             //services.RegisterHttpClient("https://localhost:5001/", "jwtTokenString");
             // then inject IPaymentAPIClient into your services
 
+            //var art = new PaymentAPIClient("", null);
+            //art.GetTokenAsync();
+
             services.AddHttpClient<IPaymentAPIClient, PaymentAPIClient>(client =>
             {
                 client.Configure(baseUrl);
