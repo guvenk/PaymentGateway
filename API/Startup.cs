@@ -37,6 +37,7 @@ namespace PaymentGateway
 
             services.AddControllers();
             services.AddSwagger();
+            services.AddHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -62,6 +63,7 @@ namespace PaymentGateway
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health");
                 endpoints.MapControllers();
             });
         }
