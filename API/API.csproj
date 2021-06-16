@@ -28,7 +28,7 @@
 		<ProjectReference Include="..\Models\Models.csproj" />
 	</ItemGroup>
 
-	<Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+	<Target Name="Generate OpenAPI Specification Document" AfterTargets="Build" Condition="'$(Configuration)'=='DEBUG'">
 		<Exec Command="swagger tofile --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll v1" />
 	</Target>
 </Project>
